@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <EditText
+        android:id="@+id/begin_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"
+        android:ems="10"
+        android:hint="输入起始站点..." >
+
+    </EditText>
+	
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/begin_name"
+        android:layout_alignRight="@+id/begin_name"
+        android:layout_below="@+id/begin_name"
+        android:layout_marginTop="15dp"
+        android:text="TO" />
+     
+    <EditText
+        android:id="@+id/end_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btn_register"
+        android:layout_below="@+id/btn_register"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="输入终点站名..." />
+    
+    <Button
+        android:id="@+id/btn_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/end_name"
+        android:layout_alignRight="@+id/end_name"
+        android:layout_centerVertical="true"
+        android:text="查询" />
+
+</RelativeLayout>

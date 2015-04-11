@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:background="#00ffffff"
+        android:padding="0dip"
+        android:src="@drawable/main" />
+
+    <Button
+        android:id="@+id/index_login"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="38dp"
+        android:layout_marginLeft="14dp"
+        android:textColor="#000000"
+        android:background="#a0f6f6f4"
+        android:text="登陆" />
+
+    <Button
+        android:id="@+id/index_register"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_alignBaseline="@+id/index_login"
+        android:layout_alignBottom="@+id/index_login"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:textColor="#000000"
+        android:background="#a0f6f6f4"
+        android:text="注册" />
+
+</RelativeLayout>
