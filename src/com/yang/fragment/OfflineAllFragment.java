@@ -16,7 +16,7 @@ import com.baidu.mapapi.map.offline.MKOfflineMapListener;
 import com.yang.mybus.R;
 
 @SuppressLint("DefaultLocale")
-public class OfflineAllFragment extends Fragment implements MKOfflineMapListener{
+public class OfflineAllFragment extends Fragment implements MKOfflineMapListener {
 	
 	private MKOfflineMap offline = null;
 	private ListView hotcity_list;
@@ -30,6 +30,7 @@ public class OfflineAllFragment extends Fragment implements MKOfflineMapListener
 		allcity_list = (ListView) view.findViewById(R.id.allcitylist);
 		
 		offline = new MKOfflineMap();
+		
 		offline.init(this);
 		
 		ArrayList<String> hotcityList = new ArrayList<String>();
@@ -80,5 +81,10 @@ public class OfflineAllFragment extends Fragment implements MKOfflineMapListener
 		}
 		return ret;
 	}
-
+	
+	@Override
+	public void onDestroy() {
+		offline.destroy();
+		super.onDestroy();
+	}
 }

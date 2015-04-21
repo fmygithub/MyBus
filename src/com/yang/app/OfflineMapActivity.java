@@ -56,5 +56,11 @@ public class OfflineMapActivity extends FragmentActivity{
 				ft.commit();
 			}
 		});
+		tab_all.setBackgroundColor(Color.GRAY);
+		tab_download.setBackgroundColor(Color.WHITE);
+		fm = getSupportFragmentManager();
+		ft = fm.beginTransaction();
+		ft.replace(content_id, allFragment);
+		ft.commit();
 	}
 }

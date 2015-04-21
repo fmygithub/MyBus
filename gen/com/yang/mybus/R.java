@@ -1142,6 +1142,7 @@ containing a value of this type.
         public static final int fragment_offline_all=0x7f030020;
         public static final int fragment_routequery=0x7f030021;
         public static final int support_simple_spinner_dropdown_item=0x7f030022;
+        public static final int test=0x7f030023;
     }
     public static final class menu {
         public static final int login=0x7f0c0000;
