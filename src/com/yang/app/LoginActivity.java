@@ -16,7 +16,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -49,7 +48,8 @@ public class LoginActivity extends Activity {
 				// 测试是否接收到消息
 				System.out.println("子线程返回的消息msg.obj:"+msg.obj.toString());
 				// 接收子线程从服务器拿到的消息
-				if (msg.obj.toString().equals("login_success")) {
+				switch (msg.obj.toString()) {
+				case "login_success":
 					// 保存登陆后的用户名
 					Bundle data = new Bundle();
 					data.putSerializable("username", username.getText().toString());
@@ -59,9 +59,13 @@ public class LoginActivity extends Activity {
 					
 					startActivity(intent);
 					finish();
-				} else if (msg.obj.toString().equals("login_fail")) {
-					// 页面提示用户名或密码错误
-					error_message.setText("用户名或密码错误，请重新输入！");
+					break;
+				case "username_wrong":
+					error_message.setText("用户名错误！");
+					password.setText("");
+					break;
+				case "password_wrong":
+					error_message.setText("密码错误！");
 					password.setText("");
 				}
 			}
@@ -90,12 +94,12 @@ public class LoginActivity extends Activity {
 					error_message.setText("密码不能为空！");
 				} else {
 					
-					/*// 调用子线程处理登陆请求，并接收返回的服务器数据
+					// 调用子线程处理登陆请求，并接收返回的服务器数据
 					loginThread = new LoginThread();
-					new Thread(loginThread).start();*/
-					Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+					new Thread(loginThread).start();
+					/*Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 					startActivity(intent);
-					finish();
+					finish();*/
 				}
 			}
 		});
@@ -136,8 +140,8 @@ public class LoginActivity extends Activity {
 		 */
 		public String post(String... params) {
 			System.out.println("数组数据：" + params[0] + "--" + params[1]);
-			HttpPost post = new HttpPost(Static.LOGIN + "?user.userName="
-					+ params[0] + "&user.password=" + params[1]);
+			HttpPost post = new HttpPost(Static.LOGIN + "?userName="
+					+ params[0] + "&password=" + params[1]);
 			try {
 				// 发送post请求
 				HttpResponse response = httpClient.execute(post);

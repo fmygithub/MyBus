@@ -8,7 +8,17 @@ package com.yang.url;
  * @date: 2015年4月7日
  */
 public class Static {
-	private static final String ip = "http://192.168.191.2:8080/MyBus/";
-	public static final String LOGIN = ip+"user/login.action";
-	public static final String REGISTER = ip + "user/addUser.action";
+	private static final String ip = "http://192.168.191.8:8080/MyBus_Server_1/";
+	/**
+	 * 登陆请求地址
+	 */
+	public static final String LOGIN = ip+"userAction_login.action";
+	/**
+	 * 注册请求地址
+	 */
+	public static final String REGISTER = ip + "userAction_add.action";
+	/**
+	 * 路线查询请求地址
+	 */
+	public static final String ROUTEQUERY = ip + "routeCheckAction_check.action";
 }

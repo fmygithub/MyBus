@@ -4,13 +4,17 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.widget.TextView;
+
 import com.yang.mybus.R;
 
 public class RouteShowActivity extends Activity {
 	private TextView show;
 	private ActionBar actionBar;
+	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
