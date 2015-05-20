@@ -90,9 +90,12 @@ public class LoginActivity extends Activity {
 					error_message.setText("密码不能为空！");
 				} else {
 					
-					// 调用子线程处理登陆请求，并接收返回的服务器数据
+					/*// 调用子线程处理登陆请求，并接收返回的服务器数据
 					loginThread = new LoginThread();
-					new Thread(loginThread).start();
+					new Thread(loginThread).start();*/
+					Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+					startActivity(intent);
+					finish();
 				}
 			}
 		});
