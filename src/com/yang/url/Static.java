@@ -8,7 +8,7 @@ package com.yang.url;
  * @date: 2015年4月7日
  */
 public class Static {
-	private static final String ip = "http://192.168.191.8:8080/MyBus_Server_1/";
+	private static final String ip = "http://192.168.191.7:8080/MyBus_Server_1/";
 	/**
 	 * 登陆请求地址
 	 */
