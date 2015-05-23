@@ -1,53 +1,32 @@
 package com.yang.entity;
 
-import java.util.Set;
+import java.io.Serializable;
+import java.util.List;
 
-/**
- * 
- * ClassName: Route
- * @Description: 路线实体
- * @author: fengmengyang
- * @date: 2015-5-15
- */
-public class Route {
-	private Long routeId;
+public class Route implements Serializable{
 	/**
-	 * 路线名
+	 * @Fields serialVersionUID: TODO
 	 */
-	private String routeName;
+	private static final long serialVersionUID = 1L;
 	/**
-	 * 站点对象（多对多关系）
-	 *//*
-	private Set<Station> stations;*/
-	
-	/**
-	 * 与中间表构成一对多关系
+	 * 查询出来始末站点之间的站数
 	 */
-	private Set<RouteStation> routeStations;
-	
-	public Long getRouteId() {
-		return routeId;
+	private int stationCount;
+	/**
+	 * 始末站点之间的站点
+	 */
+	private List<Station> stationList;
+	public int getStationCount() {
+		return stationCount;
 	}
-	public void setRouteId(Long routeId) {
-		this.routeId = routeId;
+	public void setStationCount(int stationCount) {
+		this.stationCount = stationCount;
 	}
-	public String getRouteName() {
-		return routeName;
+	public List<Station> getStationList() {
+		return stationList;
 	}
-	public void setRouteName(String routeName) {
-		this.routeName = routeName;
-	}
-	/*public Set<Station> getStations() {
-		return stations;
-	}
-	public void setStations(Set<Station> stations) {
-		this.stations = stations;
-	}*/
-	public Set<RouteStation> getRouteStations() {
-		return routeStations;
-	}
-	public void setRouteStations(Set<RouteStation> routeStations) {
-		this.routeStations = routeStations;
+	public void setStationList(List<Station> stationList) {
+		this.stationList = stationList;
 	}
 	
 }

@@ -1,6 +1,8 @@
 package com.yang.fragment;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -25,7 +27,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.yang.app.WebViewActivity;
+import com.yang.app.RouteShowActivity;
+import com.yang.entity.Route;
+import com.yang.entity.SerializableList;
+import com.yang.entity.Station;
 import com.yang.mybus.R;
 import com.yang.url.Static;
 
@@ -37,19 +42,19 @@ public class RouteQueryFragment extends Fragment {
 	// 接收子线程返回的消息
 	@SuppressLint("HandlerLeak")
 	Handler handler = new Handler() {
+		@SuppressWarnings("unchecked")
 		@Override
 		public void handleMessage(android.os.Message msg) {
 			if (msg.what == 0x124) {
+				SerializableList list = new SerializableList();
+				list.setList((List<Route>) msg.obj);
 				// 传送页面输入信息到查询结果页面
 				Bundle data = new Bundle();
-				/*
-				 * data.putSerializable("begin_name", begin_station.getText()
-				 * .toString()); data.putSerializable("end_name",
-				 * end_station.getText() .toString());
-				 */
-				data.putSerializable("html", msg.obj.toString());
-				// System.out.println("html:"+msg.obj.toString());
-				Intent intent = new Intent(getActivity(), WebViewActivity.class);
+				data.putSerializable("begin_station", begin_station.getText().toString());
+				data.putSerializable("end_station", end_station.getText().toString());
+				data.putSerializable("routeList", list);
+				Intent intent = new Intent(getActivity(),
+						RouteShowActivity.class);
 				intent.putExtras(data);
 				startActivity(intent);
 			}
@@ -84,15 +89,23 @@ public class RouteQueryFragment extends Fragment {
 
 		@Override
 		public void run() {
-			String html = post(begin_station.getText().toString(), end_station
-					.getText().toString());
+			List<Route> routeList = post(begin_station.getText().toString(),
+					end_station.getText().toString());
+
 			Message msg = new Message();
 			msg.what = 0x124;
-			msg.obj = html;
+			msg.obj = routeList;
 			handler.sendMessage(msg);
 		}
 
-		private String post(String begin_station, String end_station) {
+		/**
+		 * 
+		 * @Description: 处理和发送请求
+		 * @return List<Route>
+		 * @author: fengmengyang
+		 * @date: 2015年5月23日
+		 */
+		private List<Route> post(String begin_station, String end_station) {
 			HttpPost post = new HttpPost(Static.ROUTEQUERY
 					+ "?directRouteViewId.beginStationId=" + begin_station
 					+ "&directRouteViewId.endStationId=" + end_station);
@@ -105,14 +118,8 @@ public class RouteQueryFragment extends Fragment {
 				if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 					String json = EntityUtils.toString(response.getEntity(),
 							"utf-8");
-					// System.out.println("json: " + json);
 
-					JSONArray arr = new JSONObject(json).getJSONArray("json");
-					for (int i = 0; i < arr.length(); i++) {
-						JSONObject temp = (JSONObject) arr.get(i);
-						System.out.println(temp.toString());
-					}
-					return temp.toString();
+					return getRouteList(json);
 				}
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
@@ -122,8 +129,52 @@ public class RouteQueryFragment extends Fragment {
 			return null;
 		}
 
-		public void parseJson(JSONObject json) {
+		/**
+		 * 
+		 * @Description: 保存获取的route信息
+		 * @return List<Route>
+		 * @author: fengmengyang
+		 * @date: 2015年5月23日
+		 */
+		public List<Route> getRouteList(String json) {
+			// 保存接收的数据
+			List<Route> routeList = new ArrayList<Route>();
+			try {
+				JSONArray arr = new JSONObject(json).getJSONArray("json");
+				for (int i = 0; i < arr.length(); i++) {
+					Route route = new Route();
+					// 存储stationCount
+					int stationCount = arr.getJSONObject(i)
+							.getJSONObject("key")
+							.getJSONObject("directRouteViewId")
+							.getInt("stationCount");
+					route.setStationCount(stationCount);
 
+					// 存储站点信息stationList
+					List<Station> stationList = new ArrayList<Station>();
+					JSONArray stationArr = arr.getJSONObject(i).getJSONArray(
+							"value");
+					for (int j = 0; j < stationArr.length(); j++) {
+						Station station = new Station();
+						JSONObject stationJSON = stationArr.getJSONObject(j)
+								.getJSONObject("station");
+						station.setStationName(stationJSON
+								.getString("stationName"));
+						station.setAxis_x(stationJSON.getString("axis_x"));
+						station.setAxis_y(stationJSON.getString("axis_y"));
+
+						stationList.add(station);
+					}
+					route.setStationList(stationList);
+
+					// 将route对象放入list中
+					routeList.add(route);
+				}
+			} catch (Exception e) {
+				
+			}
+
+			return routeList;
 		}
 	}
 }
