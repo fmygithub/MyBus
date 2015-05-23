@@ -30,7 +30,8 @@ public class HandleJson {
 	public static JSONObject parse_json(HttpResponse response){
 		String temp;
 		try {
-			temp = EntityUtils.toString(response.getEntity());
+			temp = EntityUtils.toString(response.getEntity(),"utf-8");
+			System.out.println("temp: "+temp);
 			JSONObject json = new JSONObject(temp).getJSONObject("json");
 			return json;
 		} catch (ParseException e) {

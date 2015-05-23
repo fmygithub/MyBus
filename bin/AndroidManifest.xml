@@ -25,7 +25,7 @@
 		android:label="@string/app_name" android:theme="@style/AppTheme">
 		<meta-data android:name="com.baidu.lbsapi.API_KEY"
 			android:value="eh9wdGEOw7iRnB86vmr2p8B0" />
-		<activity android:name="com.yang.app.IndexActivity"
+		<activity android:name="com.yang.app.MainActivity"
 			android:label="@string/app_name">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -36,8 +36,9 @@
 		<activity android:name="com.yang.app.LoginActivity" />
 		<activity android:name="com.yang.app.LocationActivity" />
 		<activity android:name="com.yang.app.RegisterActivity" />
-		<activity android:name="com.yang.app.MainActivity" />
+		<activity android:name="com.yang.app.IndexActivity" />
 		<activity android:name="com.yang.app.RouteShowActivity" />
+		<activity android:name="com.yang.app.WebViewActivity" />
 	</application>
 
 </manifest>
