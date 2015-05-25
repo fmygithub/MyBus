@@ -37,6 +37,7 @@ import com.yang.url.Static;
 public class RouteQueryFragment extends Fragment {
 	private EditText begin_station;
 	private EditText end_station;
+	private Button btn_refresh;
 	private Button btn_query;
 
 	// 接收子线程返回的消息
@@ -67,7 +68,8 @@ public class RouteQueryFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_routequery, null);
 		begin_station = (EditText) view.findViewById(R.id.begin_name);
 		end_station = (EditText) view.findViewById(R.id.end_name);
-		btn_query = (Button) view.findViewById(R.id.btn_check);
+		btn_query = (Button) view.findViewById(R.id.btn_query);
+		btn_refresh = (Button) view.findViewById(R.id.btn_exchange);
 		btn_query.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -78,6 +80,15 @@ public class RouteQueryFragment extends Fragment {
 					new Thread(thread).start();
 				}
 
+			}
+		});
+		
+		btn_refresh.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				begin_station.setText("");
+				end_station.setText("");
 			}
 		});
 		return view;
@@ -149,11 +160,19 @@ public class RouteQueryFragment extends Fragment {
 							.getJSONObject("directRouteViewId")
 							.getInt("stationCount");
 					route.setStationCount(stationCount);
-
+					
+					//存储换乘路线
+					List<String> routeNameList = new ArrayList<String>();
+					JSONArray routeArr = arr.getJSONObject(i).getJSONArray("routeNameList");
+					for (int j = 0; j < routeArr.length(); j++) {
+						routeNameList.add((String) routeArr.get(i));
+					}
+					route.setRouteNameList(routeNameList);
+					
 					// 存储站点信息stationList
-					List<Station> stationList = new ArrayList<Station>();
 					JSONArray stationArr = arr.getJSONObject(i).getJSONArray(
 							"value");
+					List<Station> stationList = new ArrayList<Station>();
 					for (int j = 0; j < stationArr.length(); j++) {
 						Station station = new Station();
 						JSONObject stationJSON = stationArr.getJSONObject(j)
