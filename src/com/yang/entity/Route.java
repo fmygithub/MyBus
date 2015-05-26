@@ -8,6 +8,8 @@ public class Route implements Serializable{
 	 * @Fields serialVersionUID: TODO
 	 */
 	private static final long serialVersionUID = 1L;
+	private Long routeId;
+	private String routeName;
 	private List<String> routeNameList;
 	/**
 	 * 查询出来始末站点之间的站数
@@ -18,6 +20,18 @@ public class Route implements Serializable{
 	 */
 	private List<Station> stationList;
 	
+	public Long getRouteId() {
+		return routeId;
+	}
+	public void setRouteId(Long routeId) {
+		this.routeId = routeId;
+	}
+	public String getRouteName() {
+		return routeName;
+	}
+	public void setRouteName(String routeName) {
+		this.routeName = routeName;
+	}
 	public List<String> getRouteNameList() {
 		return routeNameList;
 	}

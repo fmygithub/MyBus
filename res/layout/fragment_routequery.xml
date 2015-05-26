@@ -69,7 +69,22 @@
             android:textColor="@+color/bai"
             android:textSize="20.0dip" />
     </LinearLayout>
+	
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
 
+        <Button
+            android:id="@+id/metro_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="112dp"
+            android:background="@+drawable/metro_btn_sty" />
+
+    </RelativeLayout>
+    
     <TextView
         android:id="@+id/lately_title_text"
         android:layout_width="wrap_content"

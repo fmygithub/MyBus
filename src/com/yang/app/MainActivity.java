@@ -17,9 +17,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.yang.fragment.BusQueryFragment;
 import com.yang.fragment.HelpFragment;
-import com.yang.fragment.MyzoneFragment;
 import com.yang.fragment.RouteQueryFragment;
+import com.yang.fragment.StationQueryFragment;
 import com.yang.mybus.R;
 
 public class MainActivity extends ActionBarActivity {
@@ -27,11 +28,12 @@ public class MainActivity extends ActionBarActivity {
 	private int content_id = R.id.r1;
 	private FragmentManager fm;
 	private FragmentTransaction ft;
-	private TextView tab_routequery, tab_myzone, tab_help;
+	private TextView tab_routequery, tab_busquery, tab_stationquery;
 	
 	RouteQueryFragment routeQueryFragment = new RouteQueryFragment();
 	HelpFragment helpFragment = new HelpFragment();
-	MyzoneFragment myzoneFragment = new MyzoneFragment();
+	StationQueryFragment stationQueryFragment = new StationQueryFragment();
+	BusQueryFragment busQueryFragment = new BusQueryFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +44,8 @@ public class MainActivity extends ActionBarActivity {
         this.setTitle("主页面");
         
         tab_routequery = (TextView) findViewById(R.id.tab_route_query);
-        tab_myzone = (TextView) findViewById(R.id.tab_myzone);
-        tab_help = (TextView) findViewById(R.id.tab_help);
+        tab_busquery = (TextView) findViewById(R.id.tab_bus_query);
+        tab_stationquery = (TextView) findViewById(R.id.tab_station_query);
         
         tab_routequery.setOnClickListener(new OnClickListener() {
 			
@@ -52,35 +54,35 @@ public class MainActivity extends ActionBarActivity {
 				fm = getSupportFragmentManager();
 				ft = fm.beginTransaction();
 				tab_routequery.setBackgroundColor(Color.GRAY);
-				tab_myzone.setBackgroundColor(Color.WHITE);
-				tab_help.setBackgroundColor(Color.WHITE);
+				tab_busquery.setBackgroundColor(Color.WHITE);
+				tab_stationquery.setBackgroundColor(Color.WHITE);
 				ft.replace(content_id, routeQueryFragment);
 				ft.commit();
 			}
 		});
-        tab_myzone.setOnClickListener(new OnClickListener() {
+        tab_busquery.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				fm = getSupportFragmentManager();
 				ft = fm.beginTransaction();
-				tab_myzone.setBackgroundColor(Color.GRAY);
+				tab_busquery.setBackgroundColor(Color.GRAY);
 				tab_routequery.setBackgroundColor(Color.WHITE);
-				tab_help.setBackgroundColor(Color.WHITE);;
-				ft.replace(content_id, myzoneFragment);
+				tab_stationquery.setBackgroundColor(Color.WHITE);;
+				ft.replace(content_id, busQueryFragment);
 				ft.commit();
 			}
 		});
-        tab_help.setOnClickListener(new OnClickListener() {
+        tab_stationquery.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				fm = getSupportFragmentManager();
 				ft = fm.beginTransaction();
-				tab_help.setBackgroundColor(Color.GRAY);
+				tab_stationquery.setBackgroundColor(Color.GRAY);
 				tab_routequery.setBackgroundColor(Color.WHITE);
-				tab_myzone.setBackgroundColor(Color.WHITE);
-				ft.replace(content_id, helpFragment);
+				tab_busquery.setBackgroundColor(Color.WHITE);
+				ft.replace(content_id, stationQueryFragment);
 				ft.commit();
 			}
 		});
@@ -130,7 +132,7 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_stationquery, container, false);
             return rootView;
         }
     }

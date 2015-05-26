@@ -48,7 +48,7 @@ public class RouteQueryFragment extends Fragment {
 		public void handleMessage(android.os.Message msg) {
 			if (msg.what == 0x124) {
 				SerializableList list = new SerializableList();
-				list.setList((List<Route>) msg.obj);
+				list.setRouteList((List<Route>) msg.obj);
 				// 传送页面输入信息到查询结果页面
 				Bundle data = new Bundle();
 				data.putSerializable("begin_station", begin_station.getText().toString());

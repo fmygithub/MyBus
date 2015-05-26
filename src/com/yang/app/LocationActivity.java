@@ -36,7 +36,7 @@ public class LocationActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_location);
-		btn_location = (Button) findViewById(R.id.button1); //定位按钮
+		btn_location = (Button) findViewById(R.id.btn_location); //定位按钮
 		btn_location.setText("开始定位");
 //		show_message = (TextView) findViewById(R.id.show_message);
 		btn_location.setOnClickListener(new OnClickListener() {
