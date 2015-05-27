@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.baidu.mapapi.SDKInitializer;
 import com.yang.fragment.BusQueryFragment;
 import com.yang.fragment.HelpFragment;
-import com.yang.fragment.RouteQueryFragment;
+import com.yang.fragment.LineQueryFragment;
 import com.yang.fragment.StationQueryFragment;
 import com.yang.mybus.R;
 
@@ -30,7 +30,7 @@ public class MainActivity extends ActionBarActivity {
 	private FragmentTransaction ft;
 	private TextView tab_routequery, tab_busquery, tab_stationquery;
 	
-	RouteQueryFragment routeQueryFragment = new RouteQueryFragment();
+	LineQueryFragment routeQueryFragment = new LineQueryFragment();
 	HelpFragment helpFragment = new HelpFragment();
 	StationQueryFragment stationQueryFragment = new StationQueryFragment();
 	BusQueryFragment busQueryFragment = new BusQueryFragment();
