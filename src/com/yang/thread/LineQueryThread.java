@@ -263,6 +263,7 @@ public class LineQueryThread extends Thread {
 				}
 				stations1.setBusName(bus1.getBusName());
 				stations1.setStationList(stationList1);
+				System.out.println("stations1:" + stations1.getStationList().size());
 				busStationsList.add(stations1);
 
 				BusStations stations2 = new BusStations();
@@ -280,6 +281,7 @@ public class LineQueryThread extends Thread {
 				}
 				stations2.setBusName(bus2.getBusName());
 				stations2.setStationList(stationList2);
+				System.out.println("stations2" + stations2.getStationList().size());
 				busStationsList.add(stations2);
 
 				line.setBusStationsList(busStationsList);

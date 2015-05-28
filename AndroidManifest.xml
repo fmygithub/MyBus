@@ -39,7 +39,8 @@
 		<activity android:name="com.yang.app.RegisterActivity" />
 		<activity android:name="com.yang.app.IndexActivity" />
 		<activity android:name="com.yang.app.LineShowActivity" android:theme="@android:style/Theme.NoTitleBar"/>
-		<activity android:name="com.yang.app.LineInfoShowActivity" android:theme="@android:style/Theme.NoTitleBar"/>
+		<activity android:name="com.yang.app.DirectLineInfoShowActivity" android:theme="@android:style/Theme.NoTitleBar"/>
+		<activity android:name="com.yang.app.OneChangeLineInfoShowActivity" android:theme="@android:style/Theme.NoTitleBar"/>
 		<activity android:name="com.yang.app.StationInfoShowActivity" android:theme="@android:style/Theme.NoTitleBar"/>
 		<activity android:name="com.yang.app.BusInfoShowActivity" android:theme="@android:style/Theme.NoTitleBar"/>
 		<activity android:name="com.yang.app.WebViewActivity" />

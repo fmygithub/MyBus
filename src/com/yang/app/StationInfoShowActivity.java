@@ -124,10 +124,7 @@ public class StationInfoShowActivity extends Activity {
 		back.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(StationInfoShowActivity.this,
-						MainActivity.class);
-				startActivity(intent);
-				finish();
+				StationInfoShowActivity.this.finish();
 			}
 		});
 		btnMap.setOnClickListener(new OnClickListener() {
