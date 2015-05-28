@@ -1,5 +1,6 @@
 package com.yang.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +10,11 @@ import java.util.List;
  * @author: fengmengyang
  * @date: 2015年5月27日
  */
-public class BusStations {
+public class BusStations implements Serializable{
+	/**
+	 * @Fields serialVersionUID: TODO
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * 路线名
 	 */

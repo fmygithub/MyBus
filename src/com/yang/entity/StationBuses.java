@@ -1,8 +1,13 @@
 package com.yang.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class StationBuses {
+public class StationBuses implements Serializable{
+	/**
+	 * @Fields serialVersionUID: TODO
+	 */
+	private static final long serialVersionUID = 1L;
 	private String stationName;
 	private List<Bus> busList;
 	public String getStationName() {

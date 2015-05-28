@@ -17,24 +17,74 @@ public class Line implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
-	 * 换乘路线的bus列表
+	 * 起点
 	 */
-	private List<Bus> busList;
+	private Station beginStation;
 	/**
-	 * 经过的所有站点
+	 * 目的站点
 	 */
-	private List<Station> stationList;
-	public List<Bus> getBusList() {
-		return busList;
+	private Station endStation;
+	/**
+	 * 换乘点
+	 */
+	private Station changeStation;
+	/**
+	 * 未换乘公交
+	 */
+	private Bus bus;
+	/**
+	 * 第一次换乘公交
+	 */
+	private Bus bus1;
+	/**
+	 * 换乘中路线经过的所有站点
+	 */
+	private List<BusStations> busStationsList;
+	private int stationCount;
+	
+	public Station getBeginStation() {
+		return beginStation;
 	}
-	public void setBusList(List<Bus> busList) {
-		this.busList = busList;
+	public void setBeginStation(Station beginStation) {
+		this.beginStation = beginStation;
 	}
-	public List<Station> getStationList() {
-		return stationList;
+	public Station getEndStation() {
+		return endStation;
 	}
-	public void setStationList(List<Station> stationList) {
-		this.stationList = stationList;
+	public void setEndStation(Station endStation) {
+		this.endStation = endStation;
 	}
+	public Station getChangeStation() {
+		return changeStation;
+	}
+	public void setChangeStation(Station changeStation) {
+		this.changeStation = changeStation;
+	}
+	
+	public Bus getBus() {
+		return bus;
+	}
+	public void setBus(Bus bus) {
+		this.bus = bus;
+	}
+	public Bus getBus1() {
+		return bus1;
+	}
+	public void setBus1(Bus bus1) {
+		this.bus1 = bus1;
+	}
+	public List<BusStations> getBusStationsList() {
+		return busStationsList;
+	}
+	public void setBusStationsList(List<BusStations> busStationsList) {
+		this.busStationsList = busStationsList;
+	}
+	public int getStationCount() {
+		return stationCount;
+	}
+	public void setStationCount(int stationCount) {
+		this.stationCount = stationCount;
+	}
+	
 	
 }
