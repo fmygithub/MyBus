@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="abc_search_url_text_normal">#ff7fa87f</color>
+    <item type="color" name="abc_search_url_text_selected">@*android:color/black</item>
+    <item type="color" name="abc_search_url_text_pressed">@*android:color/black</item>
+    <color name="dingcai">#ffe13f23</color>
+    <color name="bai">#ffffffff</color>
+    <color name="column_tv_bg1">#ff3567a6</color>
+    <color name="column_tv_bg2">#ff5dc9e6</color>
+    <color name="black">#ff000000</color>
+    <color name="gray">#fff5f5f5</color>
+    <color name="app_bg">#fff3f3f3</color>
+    <color name="huang">#ffff8400</color>
+    <color name="list_zi">#fff2f2f2</color>
+    <color name="bus_line_info">#ffffcd9a</color>
+    <color name="hui">#ff888888</color>
+    <color name="left_bg_color">#ff22272c</color>
+    <color name="weather_quality_color1">#ff5ec522</color>
+    <color name="weather_quality_color2">#fff2d902</color>
+    <color name="weather_quality_color3">#fffe8f00</color>
+    <color name="weather_quality_color4">#ffc25200</color>
+    <color name="weather_quality_color5">#ff751147</color>
+    <color name="weather_quality_color6">#ff38151c</color>
+    <color name="white">#ffffffff</color>
+    <color name="blue">#ff75a6ff</color>
+    <color name="translucence">#ff4e4752</color>
+</resources>
