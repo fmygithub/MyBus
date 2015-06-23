@@ -1,123 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="vertical" >
+    android:layout_height="fill_parent"
+    android:background="@color/app_bg" >
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/line_layout_top"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:background="@+drawable/station_info_top_bg"
+        android:orientation="vertical" >
 
-        <ImageView
-            android:id="@+id/left_image"
+        <Button
+            android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20.0dip"
-            android:background="@+drawable/bus_line_info_left_top" />
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@+drawable/back_btn" />
 
-        <LinearLayout
-            android:id="@+id/station_layout1"
-            android:layout_width="fill_parent"
-            android:layout_height="40.0dip"
-            android:layout_marginLeft="20.0dip"
-            android:background="@+drawable/bus_line_info_layout_bg_color2"
-            android:gravity="center_vertical"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/one_change_begin_station"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10.0dip"
-                android:textColor="@+color/black"
-                android:textSize="15.0dip" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
-
-        <ImageView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20.0dip"
-            android:background="@+drawable/bus_line_info_left_top_bottom" />
-
-        <RelativeLayout
-            android:id="@+id/line_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20.0dip"
-            android:background="@+drawable/bus_line_info_layout_bg_color1"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/one_change_bus2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10.0dip"
-                android:layout_marginRight="20.0dip"
-                android:textColor="@+color/black"
-                android:textSize="15.0dip" />
-
-            <TextView
-                android:id="@+id/one_change_stationcount2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10.0dip"
-                android:layout_marginRight="20.0dip"
-                android:layout_toLeftOf="@+id/right_image"
-                android:textColor="@+color/black"
-                android:textSize="15.0dip" />
-
-            <ImageView
-                android:id="@+id/right_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10.0dip"
-                android:background="@+drawable/line_item_right_image" />
-        </RelativeLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20.0dip"
-            android:background="@+drawable/bus_line_info_left_top" />
-
-        <LinearLayout
-            android:id="@+id/station_layout2"
-            android:layout_width="fill_parent"
-            android:layout_height="40.0dip"
-            android:layout_marginLeft="20.0dip"
-            android:background="@+drawable/bus_line_info_layout_bg_color2"
-            android:gravity="center_vertical"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/line_station2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10.0dip"
-                android:textColor="@+color/black"
-                android:textSize="15.0dip" />
-        </LinearLayout>
-    </LinearLayout>
-
-</LinearLayout>
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/btn_back"
+            android:text="登陆"
+            android:textColor="@+color/bai"
+            android:textSize="20.0dip"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</RelativeLayout>

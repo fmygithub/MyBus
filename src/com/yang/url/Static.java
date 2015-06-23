@@ -9,7 +9,7 @@ package com.yang.url;
  */
 public class Static {
 	//private static final String ip = "http://172.27.35.4:8080/MyBus_Server_1/";
-	private static final String ip = "http://192.168.191.7:8080/MyBus_Server_1/";
+	private static final String ip = "http://192.168.107.107:8080/MyBus_Server_1/";
 	/**
 	 * 登陆请求地址
 	 */
@@ -17,7 +17,7 @@ public class Static {
 	/**
 	 * 注册请求地址
 	 */
-	public static final String REGISTER = ip + "userAction_add.action";
+	public static final String REGISTER = ip + "userAction_register.action";
 	/**
 	 * 直达路线查询请求地址
 	 */

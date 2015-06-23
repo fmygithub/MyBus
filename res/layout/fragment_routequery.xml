@@ -103,34 +103,6 @@
         android:layout_marginLeft="0.5dip"
         android:layout_marginRight="0.5dip"
         android:background="@+drawable/list_zi_item_bg_color" >
-
-        <ImageView
-            android:id="@+id/lately_left_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_margin="10.0dip"
-            android:src="@+drawable/history_image" />
-
-        <TextView
-            android:id="@+id/lately_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10.0dip"
-            android:layout_toLeftOf="@+id/right_image"
-            android:layout_toRightOf="@+id/lately_left_image"
-            android:textColor="@+color/hui"
-            android:textSize="15.0dip" />
-
-        <ImageView
-            android:id="@+id/right_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="10.0dip"
-            android:src="@+drawable/line_item_right_image" />
     </RelativeLayout>
 
 </RelativeLayout>

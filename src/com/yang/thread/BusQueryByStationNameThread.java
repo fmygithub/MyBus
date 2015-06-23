@@ -22,6 +22,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.yang.entity.Bus;
+import com.yang.entity.Station;
 import com.yang.entity.StationBuses;
 import com.yang.url.Static;
 
@@ -75,10 +76,7 @@ public class BusQueryByStationNameThread extends Thread {
 			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				String json = EntityUtils.toString(response.getEntity(),
 						"utf-8");
-				List<Bus> busList = getRouteList(json);
-				StationBuses buses = new StationBuses();
-				buses.setStationName(stationName);
-				buses.setBusList(busList);
+				StationBuses buses = getRouteList(json);
 				return buses;
 			}
 		} catch (ClientProtocolException e) {
@@ -96,11 +94,14 @@ public class BusQueryByStationNameThread extends Thread {
 	 * @author: fengmengyang
 	 * @date: 2015年5月23日
 	 */
-	public List<Bus> getRouteList(String json) {
+	public StationBuses getRouteList(String json) {
 		// 保存接收的数据
+		StationBuses stationBuses = new StationBuses();
 		List<Bus> busList = new ArrayList<Bus>();
 		try {
-			JSONArray arr = new JSONObject(json).getJSONArray("json");
+			JSONObject jsonObject = new JSONObject(json).getJSONObject("json");
+			JSONObject stationJson = jsonObject.getJSONObject("key");
+			JSONArray arr = jsonObject.getJSONArray("value");
 			// 判断arr为空
 			if (arr.length() == 1 && arr.get(0).toString().equals("null")) {
 				return null;
@@ -115,10 +116,18 @@ public class BusQueryByStationNameThread extends Thread {
 					busList.add(bus);
 				}
 			}
+			
+			Station station = new Station();
+			station.setStationName(stationJson.getString("stationName"));
+			station.setAxis_x(stationJson.getString("axis_x"));
+			station.setAxis_y(stationJson.getString("axis_y"));
+			
+			stationBuses.setBusList(busList);
+			stationBuses.setStation(station);
 		} catch (Exception e) {
 
 		}
 
-		return busList;
+		return stationBuses;
 	}
 }

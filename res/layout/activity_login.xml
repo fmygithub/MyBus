@@ -1,31 +1,54 @@
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.yang.app.LoginActivity" >
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/app_bg" >
+<RelativeLayout
+        android:id="@+id/line_layout_top"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@+drawable/station_info_top_bg"
+        android:orientation="vertical" >
 
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@+drawable/back_btn" />
 
-    <ScrollView
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/btn_back"
+            android:text="登陆"
+            android:textColor="@+color/bai"
+            android:textSize="20.0dip"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+  <!--   <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent" > -->
 
         <RelativeLayout
             style="@style/LoginFormContainer"
-            android:layout_height="306dp"
+            android:layout_height="match_parent"
             android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/error_message"
-                android:layout_width="286dp"
-                android:layout_height="wrap_content" />
-
             <EditText
-                android:id="@+id/password"
-                android:layout_width="match_parent"
+                android:id="@+id/login_password"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/username"
-                android:layout_below="@+id/username"
+                android:layout_alignLeft="@+id/login_name"
+                android:layout_alignRight="@+id/login_name"
+                android:layout_below="@+id/login_name"
                 android:layout_marginTop="30dp"
                 android:ems="10"
+                android:hint="密码"
                 android:imeActionId="@+id/login"
                 android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionUnspecified"
@@ -34,44 +57,49 @@
                 android:singleLine="true" />
 
             <Button
-                android:id="@+id/sign_in_button"
-                android:layout_width="282dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/password"
+                android:id="@+id/btn_login"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:layout_alignLeft="@+id/login_password"
+                android:layout_alignRight="@+id/login_password"
+                android:layout_below="@+id/login_password"
                 android:layout_marginTop="38dp"
-                android:paddingLeft="32dp"
-                android:paddingRight="32dp"
-                android:text="登陆" />
+                android:background="@+drawable/station_info_top_bg"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:text="登陆"
+                android:textSize="20.0dip"
+                 />
+
+            <TextView
+                android:id="@+id/go_register"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/login_password"
+                android:layout_below="@+id/btn_login"
+                android:layout_marginTop="54dp"
+                android:text="      注     册        "
+                android:textColor="#20b2aa" />
 
             <EditText
-                android:id="@+id/username"
-                android:layout_width="286dp"
+                android:id="@+id/login_name"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/error_message"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="19dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="90dp"
                 android:ems="10"
                 android:hint="用户名"
                 android:inputType="textEmailAddress"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:maxLines="1"
                 android:singleLine="true" >
 
                 <requestFocus />
             </EditText>
 
-            <TextView
-                android:id="@+id/go_register"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignRight="@+id/sign_in_button"
-                android:layout_marginBottom="17dp"
-                android:text="      注     册        "
-                android:textColor="#20b2aa" />
-
         </RelativeLayout>
 
-    </ScrollView>
+<!--     </ScrollView> -->
 
-</merge>
+</RelativeLayout>

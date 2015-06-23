@@ -20,9 +20,15 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.location.LocationClientOption.LocationMode;
 import com.yang.entity.Bus;
 import com.yang.entity.BusStations;
 import com.yang.entity.SerializableList;
+import com.yang.entity.Station;
 import com.yang.mybus.R;
 import com.yang.thread.StationQueryByRouteNameThread;
 
@@ -35,6 +41,9 @@ import com.yang.thread.StationQueryByRouteNameThread;
  * @date: 2015年5月25日
  */
 public class StationInfoShowActivity extends Activity {
+	// 定位相关
+	private LocationClient mLocationClient;
+	
 	private Button back;
 	private TextView stationNameText;
 	private TextView lineNum;
@@ -75,14 +84,13 @@ public class StationInfoShowActivity extends Activity {
 
 		// 接收数据
 		Intent intent = getIntent();
-		String stationName = (String) intent
-				.getSerializableExtra("stationName");
+		final Station station = (Station) intent.getSerializableExtra("station");
 		SerializableList list = (SerializableList) intent
 				.getSerializableExtra("busList");
 		List<Bus> routeList = list.getBusList();
 
 		int length = routeList.size();
-		stationNameText.setText(stationName);
+		stationNameText.setText(station.getStationName());
 		lineNum.setText("共有" + length + "线路经过该站");
 
 		// 列表显示
@@ -127,13 +135,54 @@ public class StationInfoShowActivity extends Activity {
 				StationInfoShowActivity.this.finish();
 			}
 		});
+
+		// 定位功能
+		mLocationClient = new LocationClient(this.getApplicationContext());
+		mLocationClient.registerLocationListener(new BDLocationListener() {
+
+			@Override
+			public void onReceiveLocation(BDLocation location) {
+				// 拿到位置信息，并传到地图页面
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("axis_y", location.getLongitude());
+				bundle.putSerializable("axis_x", location.getLatitude());
+				bundle.putSerializable("address", location.getAddrStr());
+				bundle.putSerializable("station", station);
+				Intent intent = new Intent(StationInfoShowActivity.this,
+						StationMapActivity.class);
+				intent.putExtras(bundle);
+				startActivity(intent);
+			}
+
+		});
+
 		btnMap.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-
+				InitLocation();
+				mLocationClient.start();
 			}
 		});
+	}
+
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		mLocationClient.stop();
+		super.onStop();
+	}
+
+	// 初始化LocationClientOption的参数
+	private void InitLocation() {
+		LocationClientOption option = new LocationClientOption();
+		option.setLocationMode(LocationMode.Hight_Accuracy);
+		option.setCoorType("bd09ll");
+		option.setScanSpan(5000);
+		option.setIsNeedAddress(true);
+		option.setNeedDeviceDirect(true);
+
+		mLocationClient.setLocOption(option);
 	}
 }

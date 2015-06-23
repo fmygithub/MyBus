@@ -32,7 +32,7 @@ public class LineQueryFragment extends Fragment {
 		@SuppressWarnings("unchecked")
 		@Override
 		public void handleMessage(android.os.Message msg) {
-			if (msg.what == 0x124) {
+			if (msg.what == 0x127) {
 				SerializableList list = new SerializableList();
 				list.setLineList((List<Line>) msg.obj);
 				// 传送页面输入信息到查询结果页面

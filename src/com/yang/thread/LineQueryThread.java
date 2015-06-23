@@ -62,7 +62,7 @@ public class LineQueryThread extends Thread {
 		lineMap.put("oneChangeLine", oneChangeLineList);*/
 
 		Message msg = new Message();
-		msg.what = 0x124;
+		msg.what = 0x127;
 		msg.obj = lineList;
 		handler.sendMessage(msg);
 	}
@@ -268,7 +268,7 @@ public class LineQueryThread extends Thread {
 
 				BusStations stations2 = new BusStations();
 				List<Station> stationList2 = new ArrayList<Station>();
-				JSONArray stationArr2 = busStations.getJSONArray(bus1
+				JSONArray stationArr2 = busStations.getJSONArray(bus2
 						.getBusName());
 				for (int j = 0; j < stationArr2.length(); j++) {
 					Station station = new Station();

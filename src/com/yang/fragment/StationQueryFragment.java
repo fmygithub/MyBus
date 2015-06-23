@@ -35,10 +35,6 @@ public class StationQueryFragment extends Fragment {
 	 * 查询按钮
 	 */
 	private Button btnStation;
-	/**
-	 * 地图按钮
-	 */
-	private Button btnMap;
 
 	// 接收子线程返回的消息
 	@SuppressLint("HandlerLeak")
@@ -51,7 +47,7 @@ public class StationQueryFragment extends Fragment {
 				list.setBusList(buses.getBusList());
 				// 传送页面输入信息到查询结果页面
 				Bundle data = new Bundle();
-				data.putSerializable("stationName", buses.getStationName());
+				data.putSerializable("station", buses.getStation());
 				data.putSerializable("busList", list);
 				Intent intent = new Intent(getActivity(),
 						StationInfoShowActivity.class);
@@ -68,7 +64,6 @@ public class StationQueryFragment extends Fragment {
 		// 初始化元素
 		stationName = (EditText) view.findViewById(R.id.station_name);
 		btnStation = (Button) view.findViewById(R.id.btn_station);
-		btnMap = (Button) view.findViewById(R.id.btn_map);
 
 		btnStation.setOnClickListener(new OnClickListener() {
 			@Override
@@ -81,14 +76,6 @@ public class StationQueryFragment extends Fragment {
 			}
 		});
 
-		btnMap.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 		return view;
 	}
 

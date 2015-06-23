@@ -1,10 +1,10 @@
 package com.yang.application;
 
-import com.baidu.mapapi.SDKInitializer;
-
 import android.app.Application;
 
-public class ApplicationConfig extends Application {
+import com.baidu.mapapi.SDKInitializer;
+
+public class ApplicationConfig extends Application {	
 	@Override
 	public void onCreate() {
 		super.onCreate();

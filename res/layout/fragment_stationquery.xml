@@ -56,22 +56,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10.0dip"
                     android:layout_marginTop="30.0dip" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="附近站点"
-                        android:textColor="@+color/hui"
-                        android:textSize="20.0dip" />
-
-                    <Button
-                        android:id="@+id/btn_map"
-                        android:layout_width="50.0dip"
-                        android:layout_height="30.0dip"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@+drawable/map_btn_sty" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -84,6 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
+                    android:layout_marginBottom="112dp"
                     android:background="@+drawable/metro_btn_sty" />
             </RelativeLayout>
 

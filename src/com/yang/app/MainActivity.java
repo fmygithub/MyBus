@@ -53,7 +53,7 @@ public class MainActivity extends ActionBarActivity {
 			public void onClick(View v) {
 				fm = getSupportFragmentManager();
 				ft = fm.beginTransaction();
-				tab_routequery.setBackgroundColor(Color.GRAY);
+				tab_routequery.setBackgroundColor(0xffff8400);
 				tab_busquery.setBackgroundColor(Color.WHITE);
 				tab_stationquery.setBackgroundColor(Color.WHITE);
 				ft.replace(content_id, routeQueryFragment);
@@ -66,7 +66,7 @@ public class MainActivity extends ActionBarActivity {
 			public void onClick(View v) {
 				fm = getSupportFragmentManager();
 				ft = fm.beginTransaction();
-				tab_busquery.setBackgroundColor(Color.GRAY);
+				tab_busquery.setBackgroundColor(0xffff8400);
 				tab_routequery.setBackgroundColor(Color.WHITE);
 				tab_stationquery.setBackgroundColor(Color.WHITE);;
 				ft.replace(content_id, busQueryFragment);
@@ -79,7 +79,7 @@ public class MainActivity extends ActionBarActivity {
 			public void onClick(View v) {
 				fm = getSupportFragmentManager();
 				ft = fm.beginTransaction();
-				tab_stationquery.setBackgroundColor(Color.GRAY);
+				tab_stationquery.setBackgroundColor(0xffff8400);
 				tab_routequery.setBackgroundColor(Color.WHITE);
 				tab_busquery.setBackgroundColor(Color.WHITE);
 				ft.replace(content_id, stationQueryFragment);
@@ -90,7 +90,7 @@ public class MainActivity extends ActionBarActivity {
         // 设置默认显示页面
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
-        tab_routequery.setBackgroundColor(Color.GRAY);
+        tab_routequery.setBackgroundColor(0xffff8400);
         ft.replace(content_id, routeQueryFragment);
         ft.commit();
         

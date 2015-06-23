@@ -8,13 +8,13 @@ public class StationBuses implements Serializable{
 	 * @Fields serialVersionUID: TODO
 	 */
 	private static final long serialVersionUID = 1L;
-	private String stationName;
+	private Station station;
 	private List<Bus> busList;
-	public String getStationName() {
-		return stationName;
+	public Station getStation() {
+		return station;
 	}
-	public void setStationName(String stationName) {
-		this.stationName = stationName;
+	public void setStation(Station station) {
+		this.station = station;
 	}
 	public List<Bus> getBusList() {
 		return busList;

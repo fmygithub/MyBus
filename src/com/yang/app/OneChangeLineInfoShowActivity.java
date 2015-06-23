@@ -8,6 +8,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.location.LocationClientOption.LocationMode;
 import com.yang.entity.Line;
 import com.yang.mybus.R;
 
@@ -20,6 +25,9 @@ import com.yang.mybus.R;
  * @date: 2015年5月25日
  */
 public class OneChangeLineInfoShowActivity extends Activity {
+	// 定位相关
+	private LocationClient mLocationClient;
+
 	private TextView beginStation;
 	private TextView endStation;
 	private TextView lineBegin;
@@ -30,7 +38,8 @@ public class OneChangeLineInfoShowActivity extends Activity {
 	private TextView lineBus2;
 	private TextView lineStationCount1;
 	private TextView lineStationCount2;
-	private Button	back;
+	private Button back;
+	private TextView btnMap;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +67,11 @@ public class OneChangeLineInfoShowActivity extends Activity {
 				R.id.view_line_one_change_info).findViewById(
 				R.id.one_change_stationcount2);
 		back = (Button) findViewById(R.id.btn_back);
+		btnMap = (TextView) findViewById(R.id.btn_one_change_map);
 
 		// 接收数据
 		Intent intent = getIntent();
-		Line line = (Line) intent.getSerializableExtra("line");
+		final Line line = (Line) intent.getSerializableExtra("line");
 
 		beginStation.setText(line.getBeginStation().getStationName());
 		lineBegin.setText(line.getBeginStation().getStationName());
@@ -72,15 +82,63 @@ public class OneChangeLineInfoShowActivity extends Activity {
 		lineBus1.setText(line.getBusStationsList().get(0).getBusName());
 		lineBus2.setText(line.getBusStationsList().get(1).getBusName());
 		lineStationCount1.setText((line.getBusStationsList().get(0)
-				.getStationList().size() - 1) + "");
+				.getStationList().size() - 1)
+				+ "");
 		lineStationCount2.setText((line.getBusStationsList().get(1)
-				.getStationList().size() - 1) + "");
-		
+				.getStationList().size() - 1)
+				+ "");
+
 		back.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				OneChangeLineInfoShowActivity.this.finish();
 			}
 		});
+		// 定位功能
+		mLocationClient = new LocationClient(this.getApplicationContext());
+		mLocationClient.registerLocationListener(new BDLocationListener() {
+
+			@Override
+			public void onReceiveLocation(BDLocation location) {
+				// 拿到位置信息，并传到地图页面
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("axis_y", location.getLongitude());
+				bundle.putSerializable("axis_x", location.getLatitude());
+				bundle.putSerializable("address", location.getAddrStr());
+				bundle.putSerializable("line", line);
+				Intent intent = new Intent(OneChangeLineInfoShowActivity.this,
+						LineMapActivity.class);
+				intent.putExtras(bundle);
+				startActivity(intent);
+			}
+
+		});
+
+		btnMap.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				InitLocation();
+				mLocationClient.start();
+			}
+		});
+	}
+	@Override
+	protected void onStop() {
+		mLocationClient.stop();
+		super.onStop();
+	}
+
+	// 初始化LocationClientOption的参数
+	private void InitLocation() {
+		LocationClientOption option = new LocationClientOption();
+		option.setLocationMode(LocationMode.Hight_Accuracy);
+		option.setCoorType("bd09ll");
+		option.setScanSpan(5000);
+		option.setIsNeedAddress(true);
+		option.setNeedDeviceDirect(true);
+
+		mLocationClient.setLocOption(option);
 	}
 }

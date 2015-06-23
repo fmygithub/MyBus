@@ -31,7 +31,7 @@
             android:textSize="17.0dip" />
 
         <TextView
-            android:id="@+id/btn_line_map"
+            android:id="@+id/btn_bus_info_map"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

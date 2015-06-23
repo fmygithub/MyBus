@@ -1,6 +1,7 @@
 package com.yang.app;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,108 +12,68 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BitmapDescriptor;
-import com.baidu.mapapi.map.MapStatusUpdate;
-import com.baidu.mapapi.map.MapStatusUpdateFactory;
-import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.MyLocationConfiguration;
-import com.baidu.mapapi.map.MyLocationConfiguration.LocationMode;
-import com.baidu.mapapi.map.MyLocationData;
-import com.baidu.mapapi.model.LatLng;
+import com.baidu.location.LocationClientOption.LocationMode;
 import com.yang.mybus.R;
 
-public class LocationActivity extends Activity{
-	private LocationClient locationClient; //定位client
-	public MyLocationListenner myListener = new MyLocationListenner();
-	private MapView mapView ; //地图控件
-	private BaiduMap baiduMap;
-	private BitmapDescriptor currentMarker;
-	
-	private boolean isFirstLocation = true; //是否首次定位
-	private Button btn_location;
-	private TextView show_message;
+public class LocationActivity extends Activity {
+	private LocationClient mLocationClient;
+	private Button startLocation;
+	private LocationMode tempMode = LocationMode.Hight_Accuracy; ////设置定位模式
+	private String tempcoor = "bd09ll"; //返回的定位结果是百度经纬度,默认值gcj02
+	private int span = 5000; //设置发起定位请求的间隔时间为5000ms
+	private boolean isNeedAddress = true; //返回的定位结果包含地址信息
+	private boolean isNeedDeviceDirect = true;//返回的定位结果包含手机机头的方向
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_location);
-		btn_location = (Button) findViewById(R.id.btn_location); //定位按钮
-		btn_location.setText("开始定位");
-//		show_message = (TextView) findViewById(R.id.show_message);
-		btn_location.setOnClickListener(new OnClickListener() {
+		setContentView(R.layout.test_location);
+		mLocationClient = new LocationClient(this.getApplicationContext());
+		mLocationClient.registerLocationListener(new BDLocationListener() {
+
+			@Override
+			public void onReceiveLocation(BDLocation location) {
+				//拿到位置信息，并传到地图页面
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("axis_y", location.getLongitude());
+				bundle.putSerializable("axis_x", location.getLatitude());
+				Intent intent = new Intent(LocationActivity.this, BusMapActivity.class);
+				intent.putExtras(bundle);
+				startActivity(intent);
+			}
 			
+		});
+
+		//((ApplicationConfig) getApplication()).mLocationResult = LocationResult;
+		startLocation = (Button) findViewById(R.id.location);
+		startLocation.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
-				baiduMap.setMyLocationConfigeration(new MyLocationConfiguration(LocationMode.NORMAL, true, currentMarker));
+				// TODO Auto-generated method stub
+				InitLocation();
+				mLocationClient.start();
 			}
 		});
-		
-		//地图初始化
-		mapView = (MapView) findViewById(R.id.bmapView);
-		baiduMap = mapView.getMap();
-		
-		//开启定位图层
-		baiduMap.setMyLocationEnabled(true);
-		//定位初始化
-		locationClient = new LocationClient(this);
-		locationClient.registerLocationListener(myListener);
-		LocationClientOption option = new LocationClientOption();
-		option.setOpenGps(true); //打开gps
-		option.setCoorType("bd09ll"); //设置坐标类型
-		option.setScanSpan(1000);
-		locationClient.setLocOption(option);
-		locationClient.start();
+	}
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		mLocationClient.stop();
+		super.onStop();
 	}
 	
-	/**
-	 * 
-	 * ClassName: MyLocationListenner
-	 * @Description: 定位SDK监听函数
-	 * @author: fengmengyang
-	 * @date: 2015年5月2日
-	 */
-	public class MyLocationListenner implements BDLocationListener {
-
-		@Override
-		public void onReceiveLocation(BDLocation location) {
-			// map view 销毁后不再处理新接收的位置
-			if (location == null || mapView == null)
-				return;
-			MyLocationData locationData = new MyLocationData.Builder()
-				.accuracy(location.getRadius())
-				.direction(100).latitude(location.getLatitude())
-				.longitude(location.getAltitude()).build();
-			baiduMap.setMyLocationData(locationData);
-			if (isFirstLocation) {
-				isFirstLocation = false;
-				LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
-				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
-				baiduMap.animateMapStatus(u);
-			}
-		}
-		public void onReceivePoi(BDLocation poiLocation) {
-			
-		}
+	//初始化LocationClientOption的参数
+	private void InitLocation() {
+		LocationClientOption option = new LocationClientOption();
+		option.setLocationMode(tempMode);
+		option.setCoorType(tempcoor);
+		option.setScanSpan(span);
+		option.setIsNeedAddress(isNeedAddress);
+		option.setNeedDeviceDirect(isNeedDeviceDirect);
+		
+		mLocationClient.setLocOption(option);
 	}
-	@Override
-	protected void onPause() {
-		mapView.onPause();
-		super.onPause();
-	}
-	@Override
-	protected void onResume() {
-		mapView.onResume();
-		super.onResume();
-	}
-	@Override
-	protected void onDestroy() {
-		//销毁定位
-		locationClient.stop();
-		//关闭定位图层
-		baiduMap.setMyLocationEnabled(false);
-		mapView.onDestroy();
-		mapView = null;
-		super.onDestroy();
-	}
+	
 }
-

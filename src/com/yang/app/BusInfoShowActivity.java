@@ -20,6 +20,11 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.location.LocationClientOption.LocationMode;
 import com.yang.entity.SerializableList;
 import com.yang.entity.Station;
 import com.yang.entity.StationBuses;
@@ -45,8 +50,22 @@ public class BusInfoShowActivity extends Activity {
 	 * 站点列表
 	 */
 	private ListView stationListView;
+	/**
+	 * 返回按钮
+	 */
 	private Button back;
-
+	/**
+	 * 地图按钮
+	 */
+	private TextView map;
+	//定位相关
+	private LocationClient mLocationClient;
+	private LocationMode tempMode = LocationMode.Hight_Accuracy; ////设置定位模式
+	private String tempcoor = "bd09ll"; //返回的定位结果是百度经纬度,默认值gcj02
+	private int span = 5000; //设置发起定位请求的间隔时间为5000ms
+	private boolean isNeedAddress = true; //返回的定位结果包含地址信息
+	private boolean isNeedDeviceDirect = true;//返回的定位结果包含手机机头的方向
+	
 	// 接收子线程返回的消息
 	@SuppressLint("HandlerLeak")
 	Handler handler = new Handler() {
@@ -58,7 +77,7 @@ public class BusInfoShowActivity extends Activity {
 				list.setBusList(routes.getBusList());
 				// 传送页面输入信息到查询结果页面
 				Bundle data = new Bundle();
-				data.putSerializable("stationName", routes.getStationName());
+				data.putSerializable("station", routes.getStation());
 				data.putSerializable("busList", list);
 				Intent intent = new Intent(BusInfoShowActivity.this,
 						StationInfoShowActivity.class);
@@ -80,10 +99,13 @@ public class BusInfoShowActivity extends Activity {
 		endStation = (TextView) findViewById(R.id.bus_info_end);
 		stationListView = (ListView) findViewById(R.id.bus_info_list);
 		back = (Button) findViewById(R.id.btn_back);
-		// 接收数据
+		map = (TextView) findViewById(R.id.btn_bus_info_map);
+		
+		
+		// 接收BusQueryFragment传过来的数据，包含路线名和该路线所有的站点信息
 		Intent intent = getIntent();
-		String busName = (String) intent.getSerializableExtra("busName");
-		SerializableList list = (SerializableList) intent
+		final String busName = (String) intent.getSerializableExtra("busName");
+		final SerializableList list = (SerializableList) intent
 				.getSerializableExtra("stationList");
 		List<Station> stationList = list.getStationList();
 
@@ -141,5 +163,56 @@ public class BusInfoShowActivity extends Activity {
 				BusInfoShowActivity.this.finish();
 			}
 		});
+		
+		
+		
+		
+		//定位功能
+		mLocationClient = new LocationClient(this.getApplicationContext());
+		mLocationClient.registerLocationListener(new BDLocationListener() {
+
+			@Override
+			public void onReceiveLocation(BDLocation location) {
+				//拿到位置信息，并传到地图页面
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("axis_y", location.getLongitude());
+				bundle.putSerializable("axis_x", location.getLatitude());
+				bundle.putSerializable("address", location.getAddrStr());
+				bundle.putSerializable("busName", busName);
+				bundle.putSerializable("stationList", list);
+				Intent intent = new Intent(BusInfoShowActivity.this, BusMapActivity.class);
+				intent.putExtras(bundle);
+				startActivity(intent);
+			}
+			
+		});
+
+		map.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				InitLocation();
+				mLocationClient.start();
+			}
+		});
+	}
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		mLocationClient.stop();
+		super.onStop();
+	}
+	
+	//初始化LocationClientOption的参数
+	private void InitLocation() {
+		LocationClientOption option = new LocationClientOption();
+		option.setLocationMode(tempMode);
+		option.setCoorType(tempcoor);
+		option.setScanSpan(span);
+		option.setIsNeedAddress(isNeedAddress);
+		option.setNeedDeviceDirect(isNeedDeviceDirect);
+		
+		mLocationClient.setLocOption(option);
 	}
 }
