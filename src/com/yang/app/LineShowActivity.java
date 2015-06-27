@@ -10,6 +10,7 @@ import java.util.Map;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Adapter;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yang.entity.BusStations;
 import com.yang.entity.Line;
@@ -64,7 +66,7 @@ public class LineShowActivity extends Activity {
 				.getSerializableExtra("lineList");
 		final List<Line> lineList = list.getLineList();
 
-		if (lineList != null) {
+		if (lineList.size() > 0) {
 			beginStation.setText(lineList.get(0).getBeginStation()
 					.getStationName());
 			endStation
@@ -107,6 +109,12 @@ public class LineShowActivity extends Activity {
 			};
 			// 为筛选按钮绑定点击事件
 			btnScreen.setOnClickListener(myScreenListener);
+		} else {
+			Toast toast = Toast.makeText(getApplicationContext(), "无换乘方案！",
+					Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER, 0, 0);
+			toast.show();
+			LineShowActivity.this.finish();
 		}
 		btnBack.setOnClickListener(new OnClickListener() {
 			@Override
@@ -149,11 +157,24 @@ public class LineShowActivity extends Activity {
 										.getBusName().equals(busName2)) {
 							bundle.putSerializable("line", line);
 						}
-						Intent intent = new Intent(LineShowActivity.this,
-								OneChangeLineInfoShowActivity.class);
-						intent.putExtras(bundle);
-						startActivity(intent);
 					}
+					Intent intent = new Intent(LineShowActivity.this,
+							OneChangeLineInfoShowActivity.class);
+					intent.putExtras(bundle);
+					startActivity(intent);
+				/*} else if (temp.contains("两次换乘：")) {
+					String busNameArr[] = temp.substring(5, temp.length() - 1).split("→");
+					for (Line line : lineList) {
+						if (line.getBusStationsList().get(0).getBusName().equals(busNameArr[0]) 
+								&& line.getBusStationsList().get(1).getBusName().equals(busNameArr[1]) 
+								&& line.getBusStationsList().get(2).getBusName().equals(busNameArr[1])) {
+							bundle.putSerializable("line", line);
+						}
+					}
+					Intent intent = new Intent(LineShowActivity.this,
+							TwoChangeLineInfoShowActivity.class);
+					intent.putExtras(bundle);
+					startActivity(intent);*/
 				} else if (temp.contains("直达")) {
 					String busName = temp.substring(1, temp.length() - 2);
 					for (Line line : lineList) {
@@ -161,12 +182,12 @@ public class LineShowActivity extends Activity {
 								.equals(busName)) {
 							bundle.putSerializable("line", line);
 						}
-						Intent intent = new Intent(LineShowActivity.this,
-								DirectLineInfoShowActivity.class);
-						intent.putExtras(bundle);
-						startActivity(intent);
 					}
-				}
+					Intent intent = new Intent(LineShowActivity.this,
+							DirectLineInfoShowActivity.class);
+					intent.putExtras(bundle);
+					startActivity(intent);
+				} 
 			}
 		});
 	}
@@ -177,10 +198,9 @@ public class LineShowActivity extends Activity {
 		for (Line line : lineList) {
 			Map<String, Object> temp = new HashMap<String, Object>();
 			if (line.getBusStationsList().size() == 1) {
-				temp.put("stationCount",
-						"共"
-								+ (line.getBusStationsList().get(0)
-										.getStationList().size() - 1) + "站");
+				temp.put("stationCount", "共"
+						+ (line.getBusStationsList().get(0).getStationList()
+								.size() - 1) + "站");
 				temp.put("routeName", "乘"
 						+ line.getBusStationsList().get(0).getBusName() + "直达");
 			} else {
@@ -196,7 +216,13 @@ public class LineShowActivity extends Activity {
 					}
 				}
 				temp.put("stationCount", "共" + stationCount + "站");
-				temp.put("routeName", "一次换乘：" + str);
+
+				String s[] = str.split("→");
+				if (s.length - 1 == 1) {
+					temp.put("routeName", "一次换乘：" + str);
+				} else if (s.length - 1 == 2) {
+					temp.put("routeName", "两次换乘：" + str);
+				}
 			}
 			listItems.add(temp);
 		}
@@ -211,10 +237,12 @@ public class LineShowActivity extends Activity {
 			@Override
 			public int compare(Map<String, Object> o1, Map<String, Object> o2) {
 				String stationCountStr1 = o1.get("stationCount").toString();
-				Integer stationCount1 = Integer.parseInt(stationCountStr1.substring(1,stationCountStr1.length() - 1));
+				Integer stationCount1 = Integer.parseInt(stationCountStr1
+						.substring(1, stationCountStr1.length() - 1));
 				String stationCountStr2 = o2.get("stationCount").toString();
-				Integer stationCount2 = Integer.parseInt(stationCountStr2.substring(1,stationCountStr2.length() - 1));
-				return stationCount2.compareTo(stationCount1);
+				Integer stationCount2 = Integer.parseInt(stationCountStr2
+						.substring(1, stationCountStr2.length() - 1));
+				return stationCount1.compareTo(stationCount2);
 			}
 		});
 

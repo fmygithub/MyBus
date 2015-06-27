@@ -25,9 +25,13 @@ public class Line implements Serializable{
 	 */
 	private Station endStation;
 	/**
-	 * 换乘点
+	 * 换乘点1
 	 */
 	private Station changeStation;
+	/**
+	 * 换乘点2
+	 */
+	private Station changeStation2;
 	/**
 	 * 未换乘公交
 	 */
@@ -84,6 +88,12 @@ public class Line implements Serializable{
 	}
 	public void setStationCount(int stationCount) {
 		this.stationCount = stationCount;
+	}
+	public Station getChangeStation2() {
+		return changeStation2;
+	}
+	public void setChangeStation2(Station changeStation2) {
+		this.changeStation2 = changeStation2;
 	}
 	
 	

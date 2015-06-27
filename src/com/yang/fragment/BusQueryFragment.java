@@ -31,7 +31,7 @@ public class BusQueryFragment extends Fragment {
 				SerializableList list = new SerializableList();
 				BusStations stations = (BusStations) msg.obj;
 				list.setStationList(stations.getStationList());
-				System.out.println(list.getStationList().size());
+				//System.out.println(list.getStationList().size());
 				// 传送页面输入信息到查询结果页面
 				Bundle data = new Bundle();
 				data.putSerializable("busName", stations.getBusName());

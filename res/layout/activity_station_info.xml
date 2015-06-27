@@ -101,23 +101,6 @@
                 android:layout_marginTop="5.0dip"
                 android:gravity="center"
                 android:orientation="horizontal" >
-
-                <Button
-                    android:id="@+id/station_info_btn1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40.0dip"
-                    android:background="@+drawable/station_info_btn_sty"
-                    android:text="从这里出发"
-                    android:textColor="@+color/bai" />
-
-                <Button
-                    android:id="@+id/station_info_btn2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40.0dip"
-                    android:layout_marginLeft="10.0dip"
-                    android:background="@+drawable/station_info_btn_sty"
-                    android:text="到这里去"
-                    android:textColor="@+color/bai" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

@@ -49,23 +49,23 @@ public class OneChangeLineInfoShowActivity extends Activity {
 		beginStation = (TextView) findViewById(R.id.businfo_begin);
 		endStation = (TextView) findViewById(R.id.businfo_end);
 		lineChange1 = (TextView) findViewById(R.id.view_line_one_change_info)
-				.findViewById(R.id.one_change_change_station);
+				.findViewById(R.id.two_change_change_station21);
 		lineChange2 = (TextView) findViewById(R.id.view_line_one_change_info)
-				.findViewById(R.id.one_change_change_station1);
+				.findViewById(R.id.two_change_change_station2);
 		lineBegin = (TextView) findViewById(R.id.view_line_one_change_info)
-				.findViewById(R.id.one_change_begin);
+				.findViewById(R.id.two_change_begin);
 		lineEnd = (TextView) findViewById(R.id.view_line_one_change_info)
 				.findViewById(R.id.one_change_end);
 		lineBus1 = (TextView) findViewById(R.id.view_line_one_change_info)
 				.findViewById(R.id.one_change_bus1);
 		lineBus2 = (TextView) findViewById(R.id.view_line_one_change_info)
-				.findViewById(R.id.one_change_bus2);
+				.findViewById(R.id.two_change_bus3);
 		lineStationCount1 = (TextView) findViewById(
 				R.id.view_line_one_change_info).findViewById(
 				R.id.one_change_stationcount1);
 		lineStationCount2 = (TextView) findViewById(
 				R.id.view_line_one_change_info).findViewById(
-				R.id.one_change_stationcount2);
+				R.id.two_change_stationcount2);
 		back = (Button) findViewById(R.id.btn_back);
 		btnMap = (TextView) findViewById(R.id.btn_one_change_map);
 

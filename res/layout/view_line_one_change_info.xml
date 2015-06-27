@@ -28,7 +28,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/one_change_begin"
+                android:id="@+id/two_change_begin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10.0dip"
@@ -140,7 +140,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/one_change_change_station"
+                android:id="@+id/two_change_change_station21"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10.0dip"
@@ -171,7 +171,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/one_change_bus2"
+                android:id="@+id/two_change_bus3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -181,7 +181,7 @@
                 android:textSize="15.0dip" />
 
             <TextView
-                android:id="@+id/one_change_stationcount2"
+                android:id="@+id/two_change_stationcount2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -232,7 +232,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/one_change_change_station1"
+                android:id="@+id/two_change_change_station2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10.0dip"

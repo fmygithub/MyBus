@@ -42,14 +42,17 @@ public class LineQueryThread extends Thread {
 
 	@Override
 	public void run() {
-		// 发送直达路线查询请求
-		List<Line> directLineList = post(Static.DIRECTROUTEQUERY, beginStationName,
-				endStationName);
 		// 发送一次换乘路线查询请求
 		List<Line> oneChangeLineList = post(Static.ONECHANGEROUTEQUERY,
 				beginStationName, endStationName);
-		
-		//整合路线
+		// 发送直达路线查询请求
+		List<Line> directLineList = post(Static.DIRECTROUTEQUERY,
+				beginStationName, endStationName);
+		// 发送两次路线查询请求
+		List<Line> twoChangeLineList = post(Static.TWOCHANGEROUTEQUERY,
+				beginStationName, endStationName);
+
+		// 整合路线
 		List<Line> lineList = new ArrayList<Line>();
 		for (Line line : directLineList) {
 			lineList.add(line);
@@ -57,9 +60,14 @@ public class LineQueryThread extends Thread {
 		for (Line line : oneChangeLineList) {
 			lineList.add(line);
 		}
-		/*Map<String,List<Line>> lineMap =  new HashMap<String, List<Line>>();
-		lineMap.put("directLine", directLineList);
-		lineMap.put("oneChangeLine", oneChangeLineList);*/
+		for (Line line : twoChangeLineList) {
+			lineList.add(line);
+		}
+		/*
+		 * Map<String,List<Line>> lineMap = new HashMap<String, List<Line>>();
+		 * lineMap.put("directLine", directLineList);
+		 * lineMap.put("oneChangeLine", oneChangeLineList);
+		 */
 
 		Message msg = new Message();
 		msg.what = 0x127;
@@ -98,6 +106,8 @@ public class LineQueryThread extends Thread {
 					return getDirectLineList(json);
 				} else if (require.equals(Static.ONECHANGEROUTEQUERY)) {
 					return getOneChangeLineList(json);
+				} else if (require.equals(Static.TWOCHANGEROUTEQUERY)) {
+					return getTwoChangeLineList(json);
 				}
 			}
 		} catch (ClientProtocolException e) {
@@ -171,6 +181,7 @@ public class LineQueryThread extends Thread {
 
 					stationList.add(station);
 				}
+
 				stations.setBusName(bus.getBusName());
 				stations.setStationList(stationList);
 				busStationsList.add(stations);
@@ -220,9 +231,10 @@ public class LineQueryThread extends Thread {
 				line.setBeginStation(beginStation);
 				line.setEndStation(endStation);
 				line.setChangeStation(changeStation);
-				
-				line.setStationCount(change.getInt("stationCount1") + change.getInt("stationCount2"));
-				
+
+				line.setStationCount(change.getInt("stationCount1")
+						+ change.getInt("stationCount2"));
+
 				Bus bus1 = new Bus();
 				Bus bus2 = new Bus();
 				bus1.setBusName(change.getString("routeName1"));
@@ -263,7 +275,8 @@ public class LineQueryThread extends Thread {
 				}
 				stations1.setBusName(bus1.getBusName());
 				stations1.setStationList(stationList1);
-				System.out.println("stations1:" + stations1.getStationList().size());
+				System.out.println("stations1:"
+						+ stations1.getStationList().size());
 				busStationsList.add(stations1);
 
 				BusStations stations2 = new BusStations();
@@ -281,7 +294,8 @@ public class LineQueryThread extends Thread {
 				}
 				stations2.setBusName(bus2.getBusName());
 				stations2.setStationList(stationList2);
-				System.out.println("stations2" + stations2.getStationList().size());
+				System.out.println("stations2"
+						+ stations2.getStationList().size());
 				busStationsList.add(stations2);
 
 				line.setBusStationsList(busStationsList);
@@ -293,4 +307,141 @@ public class LineQueryThread extends Thread {
 		}
 		return lineList;
 	}
+
+	public List<Line> getTwoChangeLineList(String json) {
+		/*
+		 * "key":{ "id":{
+		 * "beginMarker":1,"beginStationId":7,"beginStationName":"宝德学院",
+		 * "endMarker":3,"endStationId":11,"endStationName":"后台村",
+		 * "routeId1":4,"routeId2"
+		 * :5,"routeName1":"638","routeName2":"700","staionCount"
+		 * :0,"stationCount1":1,
+		 * "stationCount2":1,"tranferMarker":2,"tranferStationId":10,
+		 * "tranferStationName":"天津城建大学" } },
+		 */
+
+		// 保存接收的数据
+		List<Line> lineList = new ArrayList<Line>();
+		try {
+			JSONArray arr = new JSONObject(json).getJSONArray("json");
+			for (int i = 0; i < arr.length(); i++) {
+				Line line = new Line();
+
+				// 存储换乘路线
+				JSONObject change = arr.getJSONObject(i).getJSONObject("key")
+						.getJSONObject("id");
+				Station beginStation = new Station();
+				Station endStation = new Station();
+				Station changeStation1 = new Station();
+				Station changeStation2 = new Station();
+				beginStation.setStationName(change
+						.getString("beginStationName"));
+				endStation.setStationName(change.getString("endStationName"));
+				changeStation1.setStationName(change
+						.getString("tranferStationName1"));
+				changeStation2.setStationName(change
+						.getString("tranferStationName2"));
+				line.setBeginStation(beginStation);
+				line.setEndStation(endStation);
+				line.setChangeStation(changeStation1);
+				line.setChangeStation2(changeStation2);
+
+				line.setStationCount(change.getInt("stationCount1")
+						+ change.getInt("stationCount2")
+						+ change.getInt("stationCount3"));
+
+				Bus bus1 = new Bus();
+				Bus bus2 = new Bus();
+				Bus bus3 = new Bus();
+				bus1.setBusName(change.getString("routeName1"));
+				bus2.setBusName(change.getString("routeName2"));
+				bus3.setBusName(change.getString("routeName3"));
+
+				/*
+				 * "value": { "700":[
+				 * {"axis_x":"117.101839","axis_y":"39.095058"
+				 * ,"routeStations":[],"stationId":10,"stationName":"天津城建大学"},
+				 * {"axis_x"
+				 * :"117.12339","axis_y":"39.105271","routeStations":[],
+				 * "stationId":11,"stationName":"后台村"} ], "638":[
+				 * {"axis_x":"117.099194"
+				 * ,"axis_y":"39.094998","routeStations":[]
+				 * ,"stationId":7,"stationName":"宝德学院"},
+				 * {"axis_x":"117.101839","axis_y"
+				 * :"39.095058","routeStations":[]
+				 * ,"stationId":10,"stationName":"天津城建大学"} ] }
+				 */
+				// 存储站点信息stationList
+				JSONObject busStations = arr.getJSONObject(i).getJSONObject(
+						"value");
+
+				List<BusStations> busStationsList = new ArrayList<BusStations>();
+
+				BusStations stations1 = new BusStations();
+				List<Station> stationList1 = new ArrayList<Station>();
+				JSONArray stationArr1 = busStations.getJSONArray(bus1
+						.getBusName());
+				for (int j = 0; j < stationArr1.length(); j++) {
+					Station station = new Station();
+					JSONObject stationJSON = stationArr1.getJSONObject(j);
+					station.setStationName(stationJSON.getString("stationName"));
+					station.setAxis_x(stationJSON.getString("axis_x"));
+					station.setAxis_y(stationJSON.getString("axis_y"));
+
+					stationList1.add(station);
+				}
+				stations1.setBusName(bus1.getBusName());
+				stations1.setStationList(stationList1);
+				System.out.println("stations1:"
+						+ stations1.getStationList().size());
+				busStationsList.add(stations1);
+
+				BusStations stations2 = new BusStations();
+				List<Station> stationList2 = new ArrayList<Station>();
+				JSONArray stationArr2 = busStations.getJSONArray(bus2
+						.getBusName());
+				for (int j = 0; j < stationArr2.length(); j++) {
+					Station station = new Station();
+					JSONObject stationJSON = stationArr2.getJSONObject(j);
+					station.setStationName(stationJSON.getString("stationName"));
+					station.setAxis_x(stationJSON.getString("axis_x"));
+					station.setAxis_y(stationJSON.getString("axis_y"));
+
+					stationList2.add(station);
+				}
+				stations2.setBusName(bus2.getBusName());
+				stations2.setStationList(stationList2);
+				System.out.println("stations2"
+						+ stations2.getStationList().size());
+				busStationsList.add(stations2);
+
+				BusStations stations3 = new BusStations();
+				List<Station> stationList3 = new ArrayList<Station>();
+				JSONArray stationArr3 = busStations.getJSONArray(bus2
+						.getBusName());
+				for (int j = 0; j < stationArr3.length(); j++) {
+					Station station = new Station();
+					JSONObject stationJSON = stationArr3.getJSONObject(j);
+					station.setStationName(stationJSON.getString("stationName"));
+					station.setAxis_x(stationJSON.getString("axis_x"));
+					station.setAxis_y(stationJSON.getString("axis_y"));
+					
+					stationList3.add(station);
+				}
+				stations3.setBusName(bus3.getBusName());
+				stations3.setStationList(stationList3);
+				System.out.println("stations3"
+						+ stations3.getStationList().size());
+				busStationsList.add(stations3);
+				
+				line.setBusStationsList(busStationsList);
+				// 将route对象放入list中
+				lineList.add(line);
+			}
+		} catch (Exception e) {
+
+		}
+		return lineList;
+	}
+	
 }
